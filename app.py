@@ -7,23 +7,23 @@ if 'history' not in st.session_state:
 
 st.set_page_config(page_title="Coock", page_icon="pp.png", layout="wide",)
 
-st.markdown(
-    """
-<style>
-    @keyframes buttonhover {
-        0% {background-color:rgb(255, 255, 255);}
-        25% {background-color:rgb(38, 0, 255);}
-        75% {background-color: yellow;}
-        100% {background-color:rgb(0, 255, 55);}
-    }
-    [data-testid="stApp"] {
-        animation: buttonhover 100ms infinite
-    }
+# st.markdown(
+#     """
+# <style>
+#     @keyframes buttonhover {
+#         0% {background-color:rgb(255, 255, 255);}
+#         25% {background-color:rgb(38, 0, 255);}
+#         75% {background-color: yellow;}
+#         100% {background-color:rgb(0, 255, 55);}
+#     }
+#     [data-testid="stApp"] {
+#         animation: buttonhover 100ms infinite
+#     }
     
-</style>
-""",
-    unsafe_allow_html=True,
-)
+# </style>
+# """,
+#     unsafe_allow_html=True,
+# )
 
 st.title("what")
 st.header("are")
