@@ -3,9 +3,5 @@ showErrorDetails = false
 
 [theme]
 font = "monospace"
-<<<<<<< HEAD
 primaryColor = "f5c842"
-=======
-primaryColor = "#f5c842"
->>>>>>> origin
 backgroundColor = "#9ed9c0"
