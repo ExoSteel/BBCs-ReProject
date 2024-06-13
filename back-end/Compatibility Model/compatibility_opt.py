@@ -3,9 +3,9 @@ import numpy as np
 import pandas as pd
 import math
 
-distributor = pd.read_csv("distributors fixed.csv")
-recipient = pd.read_csv("recipients fixed.csv")
-compat = pd.read_csv("Compatibility Confusion Matrix.csv")
+distributor = pd.read_csv("back-end/datasets/distributors.csv")
+recipient = pd.read_csv("back-end/datasets/recipients.csv")
+compat = pd.read_csv("./Compatibility Percentage Matrix.csv")
 
 print(distributor.iloc[0, 3])
 
