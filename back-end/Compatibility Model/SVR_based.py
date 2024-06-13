@@ -71,7 +71,6 @@ recip[["soy_Y","soy_N"]] = encoder.fit_transform(recip[["soy_A"]]).toarray()
 disrec[["soy_Y", "soy_N"]] = recip[["soy_Y", "soy_N"]]
 disrec = disrec.drop(["soy_A"], axis=1)
 
-
 # Data Processing
 X = disrec.drop(["recipient_Name", "recipient_Type", "requirement_Date", "distributor_Name", "distributor_Type", "submission_Date"], axis=1)
 y = diag["0"]
@@ -80,14 +79,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 tsne = TSNE(n_components=2)
 
-# ss = StandardScaler()
 X_train = tsne.fit_transform(X_train)
 X_test = tsne.fit_transform(X_test)
-
-# plt.figure(figsize=[10,8])
-# plt.scatter(X_train[:,0], X_train[:,1], c=y_train, cmap="viridis")
-# plt.colorbar()
-# plt.show()
 
 param_grid = {
     "C" : np.logspace(-2, 4, num=7),
@@ -105,4 +98,4 @@ y_pred = grid.predict(X_test)
 
 rmse = root_mean_squared_error(y_test, y_pred)
 
-print(rmse)
+print("Root Mean Squared Error:", rmse)
