@@ -1,6 +1,6 @@
 import pandas as pd
 
-matrix = pd.read_csv("back-end/Compatibility Model/Compatibility Percentage Matrix fixed.csv")
+matrix = pd.read_csv("back-end/datasets/Compatibility Percentage Matrix fixed.csv")
 diagonal = []
 
 print(matrix.head)

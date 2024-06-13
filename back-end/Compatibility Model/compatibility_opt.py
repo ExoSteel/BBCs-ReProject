@@ -5,7 +5,7 @@ import math
 
 distributor = pd.read_csv("back-end/datasets/distributors.csv")
 recipient = pd.read_csv("back-end/datasets/recipients.csv")
-compat = pd.read_csv("./Compatibility Percentage Matrix.csv")
+compat = pd.read_csv("back-end/datasets/Compatibility Percentage Matrix.csv")
 
 print(distributor.iloc[0, 3])
 

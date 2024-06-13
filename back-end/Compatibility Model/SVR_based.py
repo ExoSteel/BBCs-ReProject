@@ -6,7 +6,6 @@ from sklearn.manifold import TSNE
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from pprint import pprint
 import math
 
 def dist_diff(f_long,f_lat,l_long,l_lat): # Calculates distance via Geo-Coordinates
@@ -29,7 +28,8 @@ def dist_diff(f_long,f_lat,l_long,l_lat): # Calculates distance via Geo-Coordina
     
     return distance
 
-diag = pd.read_csv("back-end/Compatibility Model/diagonal.csv")
+# Importing Datasets
+diag = pd.read_csv("back-end/datasets/diagonal.csv")
 distri = pd.read_csv("back-end/datasets/distributors.csv")
 recip = pd.read_csv("back-end/datasets/recipients.csv")
 
@@ -48,10 +48,8 @@ for i in range(500):
         dayDiff = 1
     arrayDate.append(dayDiff)
 
-
 disrec["date_Difference"] = arrayDate
 
-# print(disrec["date_Difference"])
 # Distance Difference
 distance = []
 for i in range(500):
@@ -59,51 +57,52 @@ for i in range(500):
 
 disrec["dist_Difference"] = distance
 
-# print(disrec)
-
 # Dietary Requirements
-encoder = OneHotEncoder(categories=[["Y","N"]])
-disrec[["nut_Y","nut_N"]] = encoder.fit_transform(disrec[["nut_A"]]).toarray()
+encoder = OneHotEncoder(categories=[["Y", "N"]])
+recip[["nut_Y","nut_N"]] = encoder.fit_transform(recip[["nut_A"]]).toarray()
+disrec[["nut_Y", "nut_N"]] = recip[["nut_Y", "nut_N"]]
 disrec = disrec.drop(["nut_A"], axis=1)
 
-disrec[["egg_Y","egg_N"]] = encoder.fit_transform(disrec[["egg_A"]]).toarray()
+recip[["egg_Y","egg_N"]] = encoder.fit_transform(recip[["egg_A"]]).toarray()
+disrec[["egg_Y", "egg_N"]] = recip[["egg_Y", "egg_N"]]
 disrec = disrec.drop(["egg_A"], axis=1)
 
-disrec[["soy_Y","soy_N"]] = encoder.fit_transform(disrec[["soy_A"]]).toarray()
+recip[["soy_Y","soy_N"]] = encoder.fit_transform(recip[["soy_A"]]).toarray()
+disrec[["soy_Y", "soy_N"]] = recip[["soy_Y", "soy_N"]]
 disrec = disrec.drop(["soy_A"], axis=1)
 
 
+# Data Processing
+X = disrec.drop(["recipient_Name", "recipient_Type", "requirement_Date", "distributor_Name", "distributor_Type", "submission_Date"], axis=1)
+y = diag["0"]
 
-# X = disrec.drop(["recipient_Name, recipient_Type, requirement_Date, distributor_Name, distributor_Type, submission_Date"])
-# y = diag["0"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+tsne = TSNE(n_components=2)
 
-# tsne = TSNE(n_components=2)
+# ss = StandardScaler()
+X_train = tsne.fit_transform(X_train)
+X_test = tsne.fit_transform(X_test)
 
-# # ss = StandardScaler()
-# X_train = tsne.fit_transform(X_train)
-# X_test = tsne.fit_transform(X_test)
+# plt.figure(figsize=[10,8])
+# plt.scatter(X_train[:,0], X_train[:,1], c=y_train, cmap="viridis")
+# plt.colorbar()
+# plt.show()
 
-# # plt.figure(figsize=[10,8])
-# # plt.scatter(X_train[:,0], X_train[:,1], c=y_train, cmap="viridis")
-# # plt.colorbar()
-# # plt.show()
+param_grid = {
+    "C" : np.logspace(-2, 4, num=7),
+    "gamma" : np.logspace(-3, 2, num=6)
+}
 
-# param_grid = {
-#     "C" : np.logspace(-2, 4, num=7),
-#     "gamma" : np.logspace(-3, 2, num=6)
-# }
+svr = svm.SVR()
+grid = GridSearchCV(svr, param_grid=param_grid, scoring="neg_mean_absolute_error")
 
-# svr = svm.SVR()
-# grid = GridSearchCV(svr, param_grid=param_grid, scoring="neg_mean_absolute_error")
+grid.fit(X_train, y_train)
 
-# grid.fit(X_train, y_train)
+print(grid.best_params_)
 
-# print(grid.best_params_)
+y_pred = grid.predict(X_test)
 
-# y_pred = grid.predict(X_test)
+rmse = root_mean_squared_error(y_test, y_pred)
 
-# rmse = root_mean_squared_error(y_test, y_pred)
-
-# print(rmse)
+print(rmse)
