@@ -1,29 +1,20 @@
-from sklearn import svm
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import root_mean_squared_error
-from sklearn.manifold import TSNE
-from sklearn.cluster import KMeans
-import numpy as np
+from sklearn.neighbors import NearestNeighbors
 import pandas as pd
-import matplotlib.pyplot as plt
-import math
+import pprint
+
+df = pd.read_csv("back-end/datasets/Compatibility Percentage Matrix fixed.csv")
+recipients = df["Unnamed: 0"].iloc[1:]
+df = df.drop(["Unnamed: 0", "Unnamed: 0.1", "Distributors"], axis=1)
+distributors = df.columns
+print(recipients, distributors)
+df = df.iloc[1:]
+
+# Initialize NearestNeighbors for distributors and recipients separately
+nn_distri = NearestNeighbors(n_neighbors=2, metric='euclidean').fit(df)
 
 
+# Find nearest distributor for each recipient
+distri_i = nn_distri.kneighbors(df, return_distance=False)
 
-x_d = distributor_df.drop(['distributor_Name', 'distributor_Type'], axis = 1)
-y_d = distributor_df['submission_Date']
-
-
-
-kmeans = KMeans(
-    n_clusters = 2, 
-    init='k-means++',
-    random_state=0
-)
-kmeans.fit(x_d)
-
-from sklearn.metrics import f1_score
-
-print("Non-inverted F1:", f1_score(y, kmeans.labels_))
-print("Inverted F1:", f1_score(y, [0 if i == 1 else 1 for i in kmeans.labels_]))
+for i in range(df.shape[0]):
+    print(distributors[i], "links with", recipients.iloc[distri_i[i, 1]])
