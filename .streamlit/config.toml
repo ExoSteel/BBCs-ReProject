@@ -2,5 +2,6 @@
 showErrorDetails = false
 
 [theme]
+font = "monospace"
 primaryColor = "f5c842"
-backgroundColor = "blue"
+backgroundColor = "#9ed9c0"
