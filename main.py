@@ -144,12 +144,12 @@ elif st.session_state['page'] == 3:
     else:
         display = "Request"
     
-    if st.session_state["x"] == False:
-        @st.experimental_dialog("Linked! ")
+    if st.session_state["x"] == True:
+        @st.experimental_dialog("Linked! ✨✨✨✨✨✨✨")
         def terrible():
             st.header("Congrats! You are now Linked with Pastamania Singapore")
             map_data = pd.DataFrame(
-                np.random.randn(1, 2) + [1.3147, 104.8454],
+                [[1.363, 103.8502],[1.363, 103.8502]],
                 columns=['lat', 'lon']
             )
 
