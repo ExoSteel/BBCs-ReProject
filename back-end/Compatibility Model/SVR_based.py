@@ -29,7 +29,7 @@ def dist_diff(f_long,f_lat,l_long,l_lat): # Calculates distance via Geo-Coordina
     return distance
 
 # Importing Datasets
-diag = pd.read_csv("back-end/Compatibility Model/diagonal.csv")
+diag = pd.read_csv("back-end/datasets/diagonal.csv")
 distri = pd.read_csv("back-end/datasets/distributors.csv")
 recip = pd.read_csv("back-end/datasets/recipients.csv")
 

@@ -1,16 +1,20 @@
+from sklearn import svm
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import root_mean_squared_error
+from sklearn.manifold import TSNE
+from sklearn.cluster import KMeans
+import numpy as np
 import pandas as pd
-import sklearn
+import matplotlib.pyplot as plt
+import math
 
-distributor_df = pd.read_csv("distributor.csv")
-recipient_df = pd.read_csv("recipients.csv")
 
-from sklearn.preprocessing import normalize
-from sklearn.model_selection import train_test_split
 
 x_d = distributor_df.drop(['distributor_Name', 'distributor_Type'], axis = 1)
 y_d = distributor_df['submission_Date']
 
-from sklearn.cluster import KMeans
+
 
 kmeans = KMeans(
     n_clusters = 2, 
