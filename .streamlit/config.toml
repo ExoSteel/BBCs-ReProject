@@ -1,0 +1,6 @@
+[client]
+showErrorDetails = false
+
+[theme]
+primaryColor = "f5c842"
+backgroundColor = "blue"
