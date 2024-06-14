@@ -157,6 +157,7 @@ elif st.session_state['page'] == 3:
             color = st.color_picker("Color", "#FF0000")
             st.map(map_data, color=color)
             if st.button("Okay"):
+                st.session_state["x"] = False
                 st.rerun()
         terrible()
 
